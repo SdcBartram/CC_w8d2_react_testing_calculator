@@ -9,6 +9,7 @@ function App() {
   const [previousOperator, setPreviousOperator] = useState(null); 
   const [newTotal, setNewTotal] = useState(true);
   const [calculatedTotal, setCalculatedTotal] = useState(0);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const numberClick =  (number) => {
 
@@ -74,6 +75,11 @@ function App() {
       setNewTotal(true);
   }
 
+  const handleError = () => {
+    setErrorMessage('Error');
+    setRunningTotal('Error');
+  }
+
   const add = (number) => {
     let calculatedNumber = parseFloat(previousTotal) + parseFloat(number);
     setRunningTotal(calculatedNumber);
@@ -93,11 +99,14 @@ function App() {
   }
 
   const divide = (number) => {
+    if (number === 0) {
+      handleError()
+      return
+    }
     let calculatedNumber = parseFloat(previousTotal) / parseFloat(number);
     setRunningTotal(calculatedNumber);
     setCalculatedTotal(calculatedNumber);
   }
-
 
   return (
     <div className="container">
